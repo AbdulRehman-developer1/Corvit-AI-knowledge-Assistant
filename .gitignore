@@ -9,7 +9,16 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Never commit a real Groq API key.
-# If you keep a personal copy of config.js with your real key for local
-# testing, rename it and ignore it instead of editing config.js in place:
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Netlify
+.netlify/
+
+# Dependencies
+node_modules/
+
+# Local config with secrets
 js/config.local.js
