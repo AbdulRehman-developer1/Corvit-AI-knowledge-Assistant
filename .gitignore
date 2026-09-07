@@ -1,0 +1,15 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Never commit a real Groq API key.
+# If you keep a personal copy of config.js with your real key for local
+# testing, rename it and ignore it instead of editing config.js in place:
+js/config.local.js

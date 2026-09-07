@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Corvit Systems — Pioneer IT & Cisco Training Institute | AI Counselor</title>
+<meta name="description" content="Corvit Systems — Pakistan's #1 IT & Cisco Training Institute. Cisco Networking, Python AI/ML, AWS Cloud, CEH Cyber Security & Full-Stack Web Dev diplomas. Chat with our AI Course Counselor." />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS (precompiled build — see tailwind.config.js) -->
+<link rel="stylesheet" href="css/tailwind.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-ink-950 text-slate-200 font-body antialiased">
+
+<!-- =================== TOP UTILITY BAR =================== -->
+<div class="hidden md:block bg-ink-900/90 border-b border-white/5 text-xs">
+  <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-slate-400">
+    <div class="flex items-center gap-6">
+      <span class="flex items-center gap-1.5">📞 Helpline: <a href="tel:+923038888555" class="text-slate-200 font-semibold hover:text-cyan-300">+92 303 8888555</a></span>
+      <span class="flex items-center gap-1.5">📍 Nationwide Campuses: <span id="topbar-cities" class="text-slate-300"></span></span>
+      <span class="flex items-center gap-1.5">✉️ <a href="mailto:info@corvit.com" class="hover:text-cyan-300">info@corvit.com</a></span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="https://navttc.gov.pk" target="_blank" rel="noopener" class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-semibold hover:bg-emerald-500/20 transition">NAVTTC OPEN ↗</a>
+      <span class="text-slate-300">PMYSDP 100% Free Admissions Active</span>
+      <a href="#fee-calculator" class="text-cyan-300 font-semibold hover:text-cyan-200">Apply Now →</a>
+    </div>
+  </div>
+</div>
+
+<!-- =================== NAVBAR =================== -->
+<header class="sticky top-0 z-40 bg-ink-950/85 backdrop-blur-md border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-3 shrink-0">
+      <div class="w-11 h-11 rounded-xl border border-cyan-400/40 bg-cyan-400/5 flex items-center justify-center text-xl shadow-glow">🎓</div>
+      <div class="leading-tight">
+        <div class="font-display font-semibold text-lg text-white tracking-tight">CORVIT <span class="text-cyan-400">SYSTEMS</span></div>
+        <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Pioneer IT & Cisco Institute</div>
+      </div>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
+      <a href="#top" class="nav-link nav-link-active">Home</a>
+      <a href="#courses" class="nav-link">Courses</a>
+      <a href="#comparison" class="nav-link">Comparison</a>
+      <a href="#fee-calculator" class="nav-link">Fee Calculator</a>
+      <a href="https://navttc.gov.pk" target="_blank" rel="noopener" class="nav-link flex items-center gap-1.5">NAVTTC Free <span class="text-[10px] opacity-60">↗</span></a>
+      <a href="#campuses" class="nav-link">Campuses</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+    </nav>
+
+    <div class="hidden md:flex items-center gap-3 shrink-0">
+      <a href="#fee-calculator" class="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition flex items-center gap-2">📝 Apply Admission</a>
+      <button id="nav-ask-ai" class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-sm font-semibold transition flex items-center gap-2">🤖 Ask AI Counselor</button>
+    </div>
+
+    <button id="mobile-menu-btn" class="lg:hidden text-slate-300 text-2xl">☰</button>
+  </div>
+
+  <!-- Mobile nav -->
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-white/5 bg-ink-950 px-6 py-4 flex flex-col gap-3 text-sm font-medium">
+    <a href="#top" class="nav-link">Home</a>
+    <a href="#courses" class="nav-link">Courses</a>
+    <a href="#comparison" class="nav-link">Comparison</a>
+    <a href="#fee-calculator" class="nav-link">Fee Calculator</a>
+    <a href="https://navttc.gov.pk" target="_blank" rel="noopener" class="nav-link flex items-center gap-1.5">NAVTTC Free <span class="text-[10px] opacity-60">↗</span></a>
+    <a href="#campuses" class="nav-link">Campuses</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <button id="mobile-ask-ai" class="mt-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold">🤖 Ask AI Counselor</button>
+  </nav>
+</header>
+
+<!-- =================== HERO =================== -->
+<section id="top" class="relative overflow-hidden">
+  <div class="hero-glow"></div>
+  <div class="max-w-7xl mx-auto px-6 pt-16 pb-20 grid lg:grid-cols-2 gap-14 items-start relative">
+    <div>
+      <span class="hero-anim inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wide" style="animation-delay:.05s">
+        🏅 PAKISTAN'S #1 IT & CISCO TRAINING INSTITUTE
+      </span>
+
+      <h1 class="hero-anim font-display font-semibold text-4xl sm:text-5xl lg:text-6xl leading-[1.08] text-white mt-6" style="animation-delay:.18s">
+        Build In-Demand Tech Careers at
+        <span class="bg-gradient-to-r from-emerald-300 via-cyan-300 to-blue-400 bg-clip-text text-transparent">Corvit Systems</span>
+      </h1>
+
+      <p class="hero-anim text-slate-400 text-lg leading-relaxed mt-6 max-w-xl" style="animation-delay:.32s">
+        Choose from <span class="text-slate-200 font-semibold">50+ Professional Diplomas</span> in Cisco Networking (CCNA/CCNP), Python AI/ML, AWS Cloud, CEH Cyber Security, and Full-Stack Web Dev. Fully equipped physical Cisco hardware labs across <span id="hero-cities" class="text-slate-300"></span>.
+      </p>
+
+      <div class="hero-anim mt-9" style="animation-delay:.46s">
+        <div class="text-xs font-semibold tracking-wider text-slate-500 mb-3">INSTANT COUNSELOR SHORTCUTS:</div>
+        <div id="hero-shortcuts" class="flex flex-wrap gap-2.5"></div>
+      </div>
+    </div>
+
+    <!-- AI Wizard Card -->
+    <div class="hero-anim rounded-2xl border border-white/10 bg-ink-800/70 backdrop-blur p-6 shadow-2xl" style="animation-delay:.55s">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-lg">✨</div>
+          <div>
+            <div class="font-display font-semibold text-white leading-tight">AI Course Recommendation Wizard</div>
+            <div class="text-xs text-slate-500">Discover your ideal track in 3 seconds</div>
+          </div>
+        </div>
+        <span class="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 shrink-0">INTERACTIVE</span>
+      </div>
+
+      <div class="space-y-5">
+        <div>
+          <label class="block text-xs font-semibold tracking-wide text-slate-500 mb-2">EDUCATION BACKGROUND</label>
+          <select id="wizard-education" class="wizard-select">
+            <option>Matric / O-Level</option>
+            <option selected>Intermediate / FSc / ICS</option>
+            <option>Bachelor's Degree</option>
+            <option>Career Switcher / Working Professional</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold tracking-wide text-slate-500 mb-2">PRIMARY CAREER GOAL</label>
+          <select id="wizard-goal" class="wizard-select">
+            <option>Cisco Network Engineer (CCNA/CCNP)</option>
+            <option>AI / Data Scientist</option>
+            <option>Cloud Engineer (AWS)</option>
+            <option>Cyber Security Analyst</option>
+            <option>Full-Stack Web Developer</option>
+          </select>
+        </div>
+
+        <div id="wizard-result" class="hidden rounded-xl border border-cyan-500/30 bg-cyan-500/5 p-4 text-sm"></div>
+
+        <button id="wizard-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold transition flex items-center justify-center gap-2">
+          Get Personalized Recommendation →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FEATURED COURSES =================== -->
+<section id="courses" class="max-w-7xl mx-auto px-6 py-20">
+  <div data-reveal="fade-up" class="text-center max-w-2xl mx-auto mb-12">
+    <span class="badge-pill border-cyan-500/30 text-cyan-300 bg-cyan-500/10">VERIFIED CURRICULUM</span>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl text-white mt-4">Featured Certification Diplomas</h2>
+    <p class="text-slate-400 mt-3">Browse Corvit Systems' industry-aligned professional certification courses.</p>
+  </div>
+
+  <div id="course-filters" class="flex flex-wrap justify-center gap-2.5 mb-10"></div>
+  <div id="course-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<!-- =================== COMPARISON MATRIX =================== -->
+<section id="comparison" class="max-w-7xl mx-auto px-6 py-20">
+  <div data-reveal="fade-up" class="text-center max-w-2xl mx-auto mb-12">
+    <span class="badge-pill border-purple-500/30 text-purple-300 bg-purple-500/10">SIDE-BY-SIDE ANALYSIS</span>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl text-white mt-4">Interactive Course Comparison Matrix</h2>
+    <p class="text-slate-400 mt-3">Compare prerequisites, durations, hardware lab setups, and fee ranges across key tracks.</p>
+  </div>
+
+  <div class="rounded-2xl border border-white/10 bg-ink-800/50 overflow-x-auto">
+    <table class="w-full text-sm min-w-[820px]">
+      <thead>
+        <tr class="text-left text-xs font-semibold tracking-wide text-slate-500 border-b border-white/10">
+          <th class="px-6 py-4">Certification Track</th>
+          <th class="px-6 py-4">Duration</th>
+          <th class="px-6 py-4">Prerequisites</th>
+          <th class="px-6 py-4">Fee Bracket</th>
+          <th class="px-6 py-4">Hardware & Labs</th>
+          <th class="px-6 py-4">Placement Support</th>
+        </tr>
+      </thead>
+      <tbody id="comparison-body" class="divide-y divide-white/5"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =================== FEE CALCULATOR =================== -->
+<section id="fee-calculator" class="max-w-7xl mx-auto px-6 py-20">
+  <div class="grid lg:grid-cols-2 gap-14 items-center">
+    <div data-reveal="slide-right">
+      <span class="badge-pill border-emerald-500/30 text-emerald-300 bg-emerald-500/10">TRANSPARENT PRICING</span>
+      <h2 class="font-display font-semibold text-3xl sm:text-4xl text-white mt-4">Interactive Student Fee Calculator</h2>
+      <p class="text-slate-400 mt-4 leading-relaxed">Corvit offers flexible <span class="text-slate-200 font-semibold">2-month installment payment options</span> for all students. Calculate your exact installment breakdown or lump sum discount below:</p>
+      <ul class="mt-6 space-y-3 text-sm text-slate-300">
+        <li class="flex items-start gap-2.5">✅ 50% at Admission + 50% after 30 days</li>
+        <li class="flex items-start gap-2.5">✅ 5% Instant Discount on Lump Sum Single Payment</li>
+        <li class="flex items-start gap-2.5">✅ Official bank transfer, cash, and card swipe accepted</li>
+      </ul>
+    </div>
+
+    <div data-reveal="flip" class="rounded-2xl border border-white/10 bg-ink-800/70 p-6 shadow-2xl">
+      <label class="block text-xs font-semibold tracking-wide text-slate-500 mb-2">SELECT COURSE</label>
+      <select id="fee-course-select" class="wizard-select mb-5"></select>
+
+      <label class="block text-xs font-semibold tracking-wide text-slate-500 mb-2">CHOOSE PAYMENT OPTION</label>
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <button id="fee-option-installments" class="fee-toggle fee-toggle-active">💳 2-Month Installments</button>
+        <button id="fee-option-lumpsum" class="fee-toggle">⚡ Lump Sum (5% Off)</button>
+      </div>
+
+      <div id="fee-result" class="rounded-xl border border-white/10 bg-ink-900/60 p-5 text-sm"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== NAVTTC =================== -->
+<section id="navttc" class="max-w-7xl mx-auto px-6 py-20">
+  <div class="grid lg:grid-cols-2 gap-14 items-start">
+    <div data-reveal="slide-left">
+      <span class="badge-pill border-emerald-500/30 text-emerald-300 bg-emerald-500/10">OFFICIAL GOVERNMENT PARTNER</span>
+      <h2 class="font-display font-semibold text-3xl sm:text-4xl text-white mt-4 leading-tight">NAVTTC PMYSDP 100% Free IT Training Schemes</h2>
+      <p class="text-slate-400 mt-4 leading-relaxed">Corvit Systems is an official training partner for the Prime Minister's Youth Skills Development Program (NAVTTC). Eligible Pakistani youth receive <span class="text-slate-200 font-semibold">100% free tuition, monthly financial stipend, and official certification</span>.</p>
+
+      <div id="navttc-perks" class="grid sm:grid-cols-2 gap-4 mt-8"></div>
+    </div>
+
+    <div data-reveal="slide-right" class="rounded-2xl border border-white/10 bg-ink-800/70 p-6">
+      <div class="font-display font-semibold text-white flex items-center gap-2 mb-4">✅ NAVTTC Eligibility Checklist</div>
+      <ul id="navttc-checklist" class="space-y-3 text-sm text-slate-300 mb-6"></ul>
+      <button class="ask-ai-trigger w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition flex items-center justify-center gap-2" data-prompt="Tell me about the NAVTTC PMYSDP free training scheme and whether I'm eligible.">
+        Ask AI Counselor About NAVTTC →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CAMPUSES =================== -->
+<section id="campuses" class="max-w-7xl mx-auto px-6 py-20">
+  <div data-reveal="fade-up" class="text-center max-w-2xl mx-auto mb-12">
+    <span class="badge-pill border-cyan-500/30 text-cyan-300 bg-cyan-500/10">NATIONWIDE PRESENCE</span>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl text-white mt-4">All Corvit Campuses Directory</h2>
+    <p class="text-slate-400 mt-3">Corvit operates 6 major state-of-the-art physical campuses across Pakistan.</p>
+  </div>
+
+  <div id="campus-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<!-- =================== FAQ =================== -->
+<section id="faq" class="max-w-4xl mx-auto px-6 py-20">
+  <div data-reveal="fade-up" class="text-center mb-12">
+    <span class="badge-pill border-purple-500/30 text-purple-300 bg-purple-500/10">GOT QUESTIONS?</span>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl text-white mt-4">Frequently Asked Questions</h2>
+  </div>
+  <div id="faq-list" class="space-y-3"></div>
+</section>
+
+<!-- =================== FOOTER =================== -->
+<footer class="border-t border-white/5 bg-ink-900/60">
+  <div class="max-w-7xl mx-auto px-6 py-12 text-center">
+    <div class="font-display font-semibold text-lg text-white flex items-center justify-center gap-2">🎓 CORVIT SYSTEMS PAKISTAN</div>
+    <div id="footer-cities" class="text-slate-500 text-sm mt-3"></div>
+    <div class="text-slate-600 text-xs mt-4">© 2026 Corvit Systems. All Rights Reserved. RAG Vector AI Assistant Active.</div>
+  </div>
+</footer>
+
+<!-- =================== FLOATING CHATBOT LAUNCHER =================== -->
+<button id="chat-launcher" class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 pl-4 pr-5 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-2xl hover:scale-105 active:scale-95 transition">
+  <span class="relative flex h-2.5 w-2.5">
+    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+  </span>
+  💬 <span>AI Counselor Live</span>
+</button>
+
+<!-- =================== CHAT PANEL =================== -->
+<div id="chat-panel" class="chat-panel fixed inset-0 z-[60]">
+  <div id="chat-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+  <div class="chat-sheet absolute bottom-0 right-0 sm:bottom-6 sm:right-6 w-full sm:w-[400px] h-[100dvh] sm:h-[640px] sm:max-h-[85vh] bg-ink-900 sm:rounded-2xl border border-white/10 shadow-2xl flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-b border-white/10 shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-lg">🤖</div>
+        <div>
+          <div class="font-display font-semibold text-white text-sm">Corvit AI Counselor</div>
+          <div class="text-xs text-emerald-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Online now</div>
+        </div>
+      </div>
+      <button id="chat-close" class="text-slate-400 hover:text-white text-xl leading-none px-1">✕</button>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages" class="flex-1 overflow-y-auto px-4 py-4 space-y-4"></div>
+
+    <!-- Quick chips -->
+    <div id="chat-quick-chips" class="px-4 pb-2 flex flex-wrap gap-2 shrink-0"></div>
+
+    <!-- Input -->
+    <form id="chat-form" class="p-3 border-t border-white/10 flex items-center gap-2 shrink-0">
+      <input id="chat-input" type="text" autocomplete="off" placeholder="Ask about courses, fees, campuses…" class="flex-1 bg-ink-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50" />
+      <button type="submit" id="chat-send" class="w-11 h-11 shrink-0 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white flex items-center justify-center transition">➤</button>
+    </form>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/chatbot.js"></script>
+</body>
+</html>

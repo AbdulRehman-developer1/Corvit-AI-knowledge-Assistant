@@ -1,0 +1,283 @@
+/* ============================================================
+   CORVIT SYSTEMS — Custom styles layered on top of Tailwind CDN
+   ============================================================ */
+
+html { scroll-behavior: smooth; }
+
+body {
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(34,211,238,0.08), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 100% 10%, rgba(99,102,241,0.10), transparent 60%),
+    #04070d;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.4); }
+
+/* ---------- Hero background glow ---------- */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(600px 320px at 20% 0%, rgba(16,185,129,0.10), transparent 70%),
+    radial-gradient(700px 380px at 85% 10%, rgba(59,130,246,0.14), transparent 70%);
+  animation: heroGlowDrift 16s ease-in-out infinite alternate;
+}
+@keyframes heroGlowDrift {
+  0%   { background-position: 0% 0%, 0% 0%; opacity: 1; }
+  100% { background-position: 4% 3%, -3% 4%; opacity: .85; }
+}
+
+/* ---------- Hero load-in sequence (one orchestrated moment, not scroll-triggered) ---------- */
+.hero-anim {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: heroIn .75s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Generic scroll-reveal system ----------
+   Each section uses a distinct reveal "flavor" set via
+   data-reveal="..." in HTML; app.js adds .revealed via
+   IntersectionObserver when the element enters view. */
+[data-reveal] { opacity: 0; }
+[data-reveal].revealed { opacity: 1; }
+
+[data-reveal="fade-up"] {
+  transform: translateY(26px);
+  transition: opacity .65s cubic-bezier(.2,.7,.2,1), transform .65s cubic-bezier(.2,.7,.2,1);
+}
+[data-reveal="fade-up"].revealed { transform: translateY(0); }
+
+[data-reveal="slide-left"] {
+  transform: translateX(-36px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);
+}
+[data-reveal="slide-left"].revealed { transform: translateX(0); }
+
+[data-reveal="slide-right"] {
+  transform: translateX(36px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);
+}
+[data-reveal="slide-right"].revealed { transform: translateX(0); }
+
+[data-reveal="scale-pop"] {
+  transform: scale(.86);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+[data-reveal="scale-pop"].revealed { transform: scale(1); }
+
+[data-reveal="flip"] {
+  transform: perspective(1200px) rotateX(14deg) translateY(16px);
+  transform-origin: top center;
+  transition: opacity .7s ease, transform .8s cubic-bezier(.16,1,.3,1);
+}
+[data-reveal="flip"].revealed { transform: perspective(1200px) rotateX(0deg) translateY(0); }
+
+[data-reveal="drop"] {
+  transform: translateY(-26px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.34,1.56,.64,1);
+}
+[data-reveal="drop"].revealed { transform: translateY(0); }
+
+/* ---------- Nav links ---------- */
+.nav-link {
+  padding: 0.55rem 0.9rem;
+  border-radius: 0.6rem;
+  color: rgb(203 213 225 / 0.85);
+  transition: background-color .15s ease, color .15s ease;
+}
+.nav-link:hover { color: #fff; background-color: rgba(255,255,255,0.05); }
+.nav-link-active {
+  color: #67e8f9;
+  background-color: rgba(34,211,238,0.08);
+}
+
+/* ---------- Badge pill (section eyebrows) ---------- */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-width: 1px;
+}
+
+/* ---------- Shortcut chips (hero) ---------- */
+.shortcut-chip {
+  padding: 0.55rem 1rem;
+  border-radius: 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgb(203 213 225);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.09);
+  transition: border-color .15s ease, background-color .15s ease, transform .1s ease;
+}
+.shortcut-chip:hover {
+  border-color: rgba(34,211,238,0.4);
+  background: rgba(34,211,238,0.06);
+  transform: translateY(-1px);
+}
+
+/* ---------- Form controls ---------- */
+.wizard-select {
+  width: 100%;
+  background-color: #0b1424;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #e2e8f0;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11 3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+}
+.wizard-select:focus { outline: none; border-color: rgba(34,211,238,0.5); box-shadow: 0 0 0 3px rgba(34,211,238,0.15); }
+
+/* ---------- Fee toggle buttons ---------- */
+.fee-toggle {
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: rgb(148 163 184);
+  transition: all .15s ease;
+}
+.fee-toggle-active {
+  border-color: rgba(16,185,129,0.5);
+  background: rgba(16,185,129,0.1);
+  color: #6ee7b7;
+}
+
+/* ---------- Course cards ---------- */
+.course-card {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(15,23,41,0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.course-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-3px); }
+
+/* ---------- Filter tabs ---------- */
+.filter-tab {
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgb(148 163 184);
+  background: rgba(255,255,255,0.02);
+  transition: all .15s ease;
+}
+.filter-tab-active {
+  background: linear-gradient(90deg, #22d3ee, #3b82f6);
+  color: #04070d;
+  border-color: transparent;
+}
+
+/* ---------- FAQ ---------- */
+.faq-item { border: 1px solid rgba(255,255,255,0.08); border-radius: 1rem; background: rgba(15,23,41,0.5); overflow: hidden; }
+.faq-question { width: 100%; text-align: left; padding: 1.1rem 1.4rem; font-weight: 600; color: #e2e8f0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: 0.92rem; }
+.faq-chevron { transition: transform .2s ease; flex-shrink: 0; color: #64748b; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
+.faq-answer-inner { padding: 0 1.4rem 1.1rem; color: #94a3b8; font-size: 0.88rem; line-height: 1.6; }
+
+/* ---------- Chat launcher: ambient breathing glow ---------- */
+@keyframes launcherGlow {
+  0%, 100% { box-shadow: 0 10px 30px -8px rgba(37,99,235,0.45); }
+  50%      { box-shadow: 0 12px 46px -6px rgba(147,51,234,0.65); }
+}
+#chat-launcher { animation: launcherGlow 3.4s ease-in-out infinite; }
+#chat-launcher:hover { animation-play-state: paused; }
+
+/* ---------- Chat panel open/close transition ---------- */
+.chat-panel {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .25s ease, visibility 0s linear .25s;
+}
+.chat-panel.chat-open { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .25s ease, visibility 0s linear 0s; }
+.chat-sheet {
+  transform: translateY(28px) scale(.97);
+  opacity: 0;
+  transition: transform .38s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+}
+.chat-panel.chat-open .chat-sheet { transform: translateY(0) scale(1); opacity: 1; }
+
+/* ---------- Chat bubbles ---------- */
+.chat-bubble { max-width: 85%; padding: 0.7rem 1rem; border-radius: 1rem; font-size: 0.86rem; line-height: 1.55; white-space: pre-wrap; }
+.chat-bubble-bot { background: rgba(255,255,255,0.05); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.06); border-bottom-left-radius: 0.3rem; align-self: flex-start; }
+.chat-bubble-user { background: linear-gradient(90deg,#0891b2,#2563eb); color: #fff; border-bottom-right-radius: 0.3rem; align-self: flex-end; }
+.chat-row { display: flex; }
+.chat-row-bot { justify-content: flex-start; animation: bubbleInLeft .35s cubic-bezier(.2,.7,.3,1) both; }
+.chat-row-user { justify-content: flex-end; animation: bubbleInRight .3s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes bubbleInLeft { from { opacity: 0; transform: translate(-8px, 8px); } to { opacity: 1; transform: none; } }
+@keyframes bubbleInRight { from { opacity: 0; transform: translate(8px, 8px); } to { opacity: 1; transform: none; } }
+
+.chat-course-card {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  border-radius: 0.9rem;
+  padding: 0.85rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.chat-quick-chip {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: #cbd5e1;
+  white-space: nowrap;
+}
+.chat-quick-chip:hover { border-color: rgba(34,211,238,0.4); color: #67e8f9; }
+
+.typing-dot { width: 6px; height: 6px; border-radius: 9999px; background: #64748b; animation: typingBounce 1.2s infinite ease-in-out; }
+.typing-dot:nth-child(2) { animation-delay: .15s; }
+.typing-dot:nth-child(3) { animation-delay: .3s; }
+@keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+/* ---------- Small result "pop" used by the wizard + fee calculator
+   whenever their output is (re)generated ---------- */
+@keyframes resultPop {
+  0%   { opacity: 0; transform: translateY(6px) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.result-pop { animation: resultPop .35s cubic-bezier(.2,.7,.2,1) both; }
+
+/* ---------- Syllabus panel smooth expand ---------- */
+.syllabus-panel { max-height: 0; overflow: hidden; opacity: 0; transition: max-height .35s ease, opacity .25s ease, margin-top .35s ease, padding-top .35s ease; }
+.syllabus-panel.open { opacity: 1; }
+
+/* ---------- Course card icon micro-interaction on hover ---------- */
+.course-card { position: relative; }
+.course-card h3 { transition: color .2s ease; }
+.course-card:hover h3 { color: #67e8f9; }
+
+/* ---------- Filter tab press feedback ---------- */
+.filter-tab { transform: scale(1); }
+.filter-tab:active { transform: scale(.96); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
