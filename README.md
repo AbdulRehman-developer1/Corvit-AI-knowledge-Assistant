@@ -103,3 +103,14 @@ Recommended workflow:
 1. Keep `js/config.js` in git with the placeholder, exactly as it is now.
 2. For local testing, either edit it temporarily and avoid committing that change, or copy it to `js/config.local.js` (already covered by `.gitignore`) and load that script instead in `index.html` while testing.
 3. For a real deployment, set a request/rate limit on the key in your Groq dashboard, or better, proxy the API call through a small serverless function so the key never reaches the browser at all.
+
+
+👨‍💻 Author
+
+Abdul Rehman
+AI Engineer | Data Science & AI Enthusiast
+
+GitHub: @AbdulRehman-developer1
+LinkedIn: Abdul Rehman
+
+⭐ If you found this project useful, consider giving it a star!
