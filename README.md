@@ -1,148 +1,248 @@
+<div align="center">
+
 # 🎓 Corvit AI Knowledge Assistant
 
-A dark-themed, animated marketing landing page + AI course-counselor chatbot for **Corvit Systems** — Pakistan's IT & Cisco training institute. Built with plain HTML, Tailwind CSS, and vanilla JavaScript (no framework, no build step for the frontend). The AI Counselor is powered by [Groq](https://groq.com) (`openai/gpt-oss-120b`, with automatic fallback to `llama-3.3-70b-versatile`), called securely through a **Netlify serverless function** so the API key never reaches the browser.
+**A dark-themed, animated landing page + AI course-counselor chatbot for Corvit Systems**
+Pakistan's IT & Cisco training institute — built with plain HTML, Tailwind CSS, and vanilla JS.
 
-> Static frontend, one backend function. Open `index.html` to browse the site; deploy to Netlify to get a working AI chatbot.
+[![Made with HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Netlify Functions](https://img.shields.io/badge/Netlify_Functions-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://docs.netlify.com/functions/overview/)
+[![Groq](https://img.shields.io/badge/Groq_API-F55036?style=for-the-badge&logo=groq&logoColor=white)](https://groq.com)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](./LICENSE)
+[![Repo size](https://img.shields.io/github/repo-size/AbdulRehman-developer1/Corvit-AI-knowledge-Assistant?style=flat-square&color=blue)](https://github.com/AbdulRehman-developer1/Corvit-AI-knowledge-Assistant)
+[![Last commit](https://img.shields.io/github/last-commit/AbdulRehman-developer1/Corvit-AI-knowledge-Assistant?style=flat-square&color=orange)](https://github.com/AbdulRehman-developer1/Corvit-AI-knowledge-Assistant/commits/main)
+[![Stars](https://img.shields.io/github/stars/AbdulRehman-developer1/Corvit-AI-knowledge-Assistant?style=flat-square&color=yellow)](https://github.com/AbdulRehman-developer1/Corvit-AI-knowledge-Assistant/stargazers)
+[![No build step](https://img.shields.io/badge/build_step-none-brightgreen?style=flat-square)]()
+
+**No framework · No bundler · One serverless function for the AI**
+
+[Live Demo](#) · [Features](#-features) · [Architecture](#-how-the-ai-chat-actually-works-architecture) · [Getting Started](#-getting-started) · [Deploy](#4-deploy)
+
+</div>
+
+---
+
+## 📖 Table of Contents
+
+- [✨ Features](#-features)
+- [🧠 Architecture](#-how-the-ai-chat-actually-works-architecture)
+- [🗂 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+- [✏️ Editing Content](#️-editing-content)
+- [🎨 Customizing Animations](#-customizing-animations)
+- [🛠 Tech Stack](#-tech-stack)
+- [🔒 Security Notes](#-security-notes)
+- [📄 License](#-license)
+- [👨‍💻 Author](#-author)
 
 ---
 
 ## ✨ Features
 
-**Content sections** (`index.html`)
-- Hero with an instant, rule-based course-recommendation wizard
-- Featured course catalog with category filters and expandable syllabi
-- Side-by-side course comparison matrix
-- Interactive fee calculator (installment plan vs. 5% lump-sum discount)
-- NAVTTC / PMYSDP free-training scheme section with an eligibility checklist
-- Campus directory across Corvit's nationwide locations
-- Accordion-style FAQ
+<table>
+<tr>
+<td width="33%" valign="top">
 
-**AI Counselor chatbot**
-- Floating chat launcher available on every section, plus "Ask AI" shortcuts (hero chips, course cards, NAVTTC card, nav/mobile menu) that open the chat pre-filled with a relevant question
-- Full knowledge of courses, fees, campuses, and the NAVTTC scheme — built at runtime from `js/data.js`, so it can never drift out of sync with what's on the page
-- Model replies with structured JSON (`{"reply": "...", "recommend": ["course-id", ...]}`) so the UI can render rich, clickable course-recommendation cards inline instead of plain text
-- Automatic fallback to a second Groq model if the primary model call fails
-- Replies in English or Roman Urdu depending on how the visitor writes
-- Typing indicator, scroll-to-bottom, and a friendly error bubble (with the helpline number) if both models fail
+### 🖥️ Content Sections
+- Hero + rule-based course wizard
+- Filterable course catalog
+- Course comparison matrix
+- Interactive fee calculator
+- NAVTTC/PMYSDP eligibility checker
+- Campus directory
+- Accordion FAQ
 
-**Design & motion**
-- Each section has its own distinct, scroll-triggered reveal animation (fade, slide, scale-pop, 3D flip, drop-in) via a lightweight `IntersectionObserver`-based engine — see `observeReveals()` in `js/app.js`
-- Orchestrated hero load-in sequence and an ambient background glow drift
-- Smooth open/close transition and animated message bubbles for the chat panel
+</td>
+<td width="33%" valign="top">
+
+### 🤖 AI Counselor
+- Floating chat, site-wide "Ask AI"
+- Knowledge built live from `data.js`
+- Structured JSON → rich course cards
+- Auto model fallback on failure
+- Replies in English or Roman Urdu
+- Typing indicator + graceful errors
+
+</td>
+<td width="33%" valign="top">
+
+### 🎬 Design & Motion
+- Per-section scroll-reveal animations
+- `IntersectionObserver`-driven engine
+- Ambient hero glow + load-in sequence
 - Respects `prefers-reduced-motion`
-- A 4-second safety-net timer force-reveals any section whose animation never fired, so content can never get stuck invisible
+- 4s safety-net so content never hides
 
-**NAVTTC links**
-- The navbar, mobile menu, and top utility bar all link straight to the official NAVTTC site (`https://navttc.gov.pk`) in a new tab
+</td>
+</tr>
+</table>
+
+> 🔗 **NAVTTC links:** navbar, mobile menu, and top bar all deep-link to the official `https://navttc.gov.pk` in a new tab.
 
 ---
 
 ## 🧠 How the AI chat actually works (architecture)
 
 ```
-Browser (chatbot.js)
-   │  POST /.netlify/functions/chat  { model, messages }
-   ▼
-Netlify Function (netlify/functions/chat.js)
-   │  reads GROQ_API_KEY from Netlify environment variable (server-side only)
-   │  POST https://api.groq.com/openai/v1/chat/completions
-   ▼
-Groq API → JSON reply → forwarded back to the browser
+┌──────────────────────┐        POST /.netlify/functions/chat        ┌───────────────────────────┐
+│   Browser             │ ─────────────────────────────────────────▶ │   Netlify Function          │
+│   js/chatbot.js       │        { model, messages }                 │   netlify/functions/chat.js │
+└──────────────────────┘                                             └──────────────┬─────────────┘
+                                                                                      │ reads GROQ_API_KEY
+                                                                                      │ from server-side env var
+                                                                                      ▼
+                                                                       ┌───────────────────────────┐
+                                                                       │        Groq API             │
+                                                                       │  openai/gpt-oss-120b →      │
+                                                                       │  llama-3.3-70b (fallback)    │
+                                                                       └───────────────────────────┘
 ```
 
-- `js/chatbot.js` never talks to Groq directly. It calls the same-origin `/.netlify/functions/chat` endpoint.
-- `netlify/functions/chat.js` is the only place the real Groq key is used, and it reads it from `process.env.GROQ_API_KEY` — a Netlify environment variable, never committed to the repo.
-- **`js/config.js`'s `GROQ_API_KEY` field is not used by the code today** — the chat flow ships secure-by-default through the function above. That field is legacy/optional; you can safely ignore or delete it. `CONFIG.MODEL_PRIMARY`, `CONFIG.MODEL_FALLBACK`, and `CONFIG.INSTITUTE_NAME` *are* used (by `chatbot.js`).
+| Piece | Role |
+|---|---|
+| `js/chatbot.js` | Builds the system prompt from `data.js`, sends chat history to `/.netlify/functions/chat`, renders replies + course cards. **Never calls Groq directly.** |
+| `netlify/functions/chat.js` | The only place the real Groq key is used. Reads `process.env.GROQ_API_KEY` (server-side, never committed) and proxies the request to Groq. |
+| `js/config.js` | Holds `MODEL_PRIMARY`, `MODEL_FALLBACK`, `INSTITUTE_NAME` (all used). Its `GROQ_API_KEY` field is **legacy/unused** — safe to ignore or delete. |
 
-This means: **the Groq API key is never exposed to visitors' browsers**, as long as you deploy on Netlify (or an equivalent platform that runs the function) and set the key as an environment variable there — not in a committed file.
+✅ **Result:** the real Groq API key is never shipped to the visitor's browser, as long as you deploy on Netlify (or an equivalent that runs the function) with the key set as an environment variable — not committed to the repo.
 
 ---
 
-## 🗂 Project structure
+## 🗂 Project Structure
+
 ```
-index.html                     → main page markup (all sections)
-css/style.css                  → custom styles, animations, and the scroll-reveal system (on top of Tailwind)
-css/tailwind.css               → precompiled Tailwind build (see tailwind.config.js)
-js/config.js                   → model names + institute display name (GROQ_API_KEY field is unused, see above)
-js/data.js                     → courses, campuses, FAQs, NAVTTC info — single source of truth
-js/app.js                      → renders sections, wires up UI (wizard, filters, calculator, FAQ, reveal animations)
-js/chatbot.js                  → chat UI, system-prompt builder, calls the Netlify function, renders course cards
-netlify/functions/chat.js      → serverless proxy: holds the real Groq API key, forwards chat requests to Groq
-netlify.toml                   → Netlify build/redirect/security-header config
-tailwind.config.js             → Tailwind theme (fonts, ink color scale, glow shadow)
-.gitignore                     → excludes .env, js/config.local.js, editor/OS junk
-LICENSE                        → MIT
+📦 Corvit-AI-knowledge-Assistant
+├── 📄 index.html                     → main page markup (all sections)
+├── 📁 css/
+│   ├── style.css                     → custom styles, animations, scroll-reveal system
+│   └── tailwind.css                  → precompiled Tailwind build
+├── 📁 js/
+│   ├── config.js                     → model names + institute name (GROQ_API_KEY unused, see above)
+│   ├── data.js                       → courses, campuses, FAQs, NAVTTC — single source of truth
+│   ├── app.js                        → renders sections, wires up UI + reveal animations
+│   └── chatbot.js                    → chat UI, system-prompt builder, calls the Netlify function
+├── 📁 netlify/functions/
+│   └── chat.js                       → serverless proxy: holds the real Groq key, talks to Groq
+├── 📄 netlify.toml                   → build / redirect / security-header config
+├── 📄 tailwind.config.js             → Tailwind theme (fonts, ink color scale, glow shadow)
+├── 📄 .gitignore                     → excludes .env, js/config.local.js, editor/OS junk
+└── 📄 LICENSE                        → MIT
 ```
 
 ---
 
-## 🚀 Getting started
+## 🚀 Getting Started
 
-### 1. Get a free Groq API key
-Sign up and create a key at https://console.groq.com/keys — Groq's free tier is enough to run this project.
+### 1️⃣ Get a free Groq API key
+Sign up at 🔑 **https://console.groq.com/keys** — the free tier is enough to run this project.
 
-### 2. Run the frontend locally (no chatbot)
-Just open `index.html` in a browser, or serve it so relative paths behave the same as in production:
+### 2️⃣ Run the frontend only (no chatbot)
 ```bash
 python3 -m http.server 8080
 # then visit http://localhost:8080
 ```
-This shows the full landing page, but the chat panel will error out because there's no serverless function running to talk to Groq.
+> ⚠️ Full landing page works, but the chat panel will error — no function is running to talk to Groq.
 
-### 3. Run the chatbot locally too (recommended)
-The Netlify Function needs the [Netlify CLI](https://docs.netlify.com/cli/get-started/):
+### 3️⃣ Run the chatbot locally too (recommended)
 ```bash
 npm install -g netlify-cli
 netlify dev
 ```
-Then, either:
-- set the key for the session: `export GROQ_API_KEY=your_key_here` before running `netlify dev`, or
-- create a `.env` file in the project root with `GROQ_API_KEY=your_key_here` (already covered by `.gitignore`, so it's never committed).
+Then provide the key one of two ways:
+```bash
+# Option A — export for the session
+export GROQ_API_KEY=your_key_here
 
-`netlify dev` serves `index.html` **and** runs `netlify/functions/chat.js` locally, so the AI Counselor works exactly as it will in production.
+# Option B — create a .env file in the project root (already git-ignored)
+echo "GROQ_API_KEY=your_key_here" > .env
+```
+`netlify dev` serves the site **and** runs `netlify/functions/chat.js` locally — the AI Counselor works exactly like production.
 
-### 4. Deploy
+### 4️⃣ Deploy
 
-**Netlify — GitHub (recommended):**
-1. Push this repo to GitHub.
-2. In Netlify: **Add new site → Import an existing project → GitHub** → pick the repo.
-3. Build command: *(leave blank)* — Publish directory: `.`
-4. **Site settings → Environment variables** → add `GROQ_API_KEY` with your real key.
-5. Deploy. Netlify will give you a live `https://your-site.netlify.app` link, and the AI Counselor will work out of the box.
+<table>
+<tr><th>Method</th><th>Steps</th><th>Chatbot works?</th></tr>
+<tr>
+<td><b>Netlify + GitHub</b><br>✅ recommended</td>
+<td>
 
-**Netlify — drag & drop:** works for the static page, but drag-and-drop deploys don't run functions/env vars the same way — use the GitHub method above if you want the chatbot working.
+1. Push repo to GitHub
+2. Netlify → **Add new site → Import project → GitHub**
+3. Build command: *blank* · Publish dir: `.`
+4. **Site settings → Environment variables** → add `GROQ_API_KEY`
+5. Deploy 🚀
 
-**GitHub Pages:** fine for the landing page only. GitHub Pages can't run the Netlify Function, so the chatbot won't work there without pointing it at a Groq proxy hosted elsewhere.
-
----
-
-## ✏️ Editing content
-All course/campus/fee/FAQ data lives in `js/data.js`. Edit that file to add real course details, more campuses, or update fees — the course cards, comparison table, fee calculator, and the chatbot's knowledge all read from it automatically, so you only ever edit data in one place.
-
-## 🎨 Customizing animations
-Section entrance animations are driven by a `data-reveal="..."` attribute in `index.html` (values: `fade-up`, `slide-left`, `slide-right`, `scale-pop`, `flip`, `drop`), matched to CSS rules in `css/style.css` and triggered by the `observeReveals()` helper in `js/app.js`. To change how a section animates in, just change its `data-reveal` value — no JS changes needed.
-
-## Tech stack
-- HTML5 + [Tailwind CSS](https://tailwindcss.com) (precompiled, no CDN dependency)
-- Vanilla JavaScript (ES6+), no framework
-- [Groq](https://groq.com) OpenAI-compatible chat completions API, called from a Netlify serverless function
-- [Netlify Functions](https://docs.netlify.com/functions/overview/) for the secure backend proxy
-
-## License
-MIT — see [LICENSE](./LICENSE).
-
-## 🔒 Security notes
-- Never commit a real API key. `js/config.js` ships with a harmless, unused placeholder (`PASTE_YOUR_GROQ_API_KEY_HERE`) — safe to keep as-is.
-- The real key belongs **only** in a Netlify environment variable (`GROQ_API_KEY`) or a local, git-ignored `.env` file — never in a file that gets committed.
-- If you ever did commit a real key by mistake, rotate/revoke it in the Groq dashboard immediately — removing it from a later commit does not remove it from git history.
-- Consider setting a usage/rate limit on the key in your Groq dashboard as a second layer of protection.
+</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Netlify drag & drop</td>
+<td>Drag the folder into <a href="https://app.netlify.com/drop">app.netlify.com/drop</a></td>
+<td>⚠️ Static only — use GitHub method for the AI chat</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>Settings → Pages → deploy from <code>main</code>, root folder</td>
+<td>❌ No — Pages can't run Netlify Functions</td>
+</tr>
+</table>
 
 ---
 
-👨‍💻 **Author**
+## ✏️ Editing Content
 
-**Abdul Rehman** — AI Engineer | Data Science & AI Enthusiast
+All course/campus/fee/FAQ data lives in **`js/data.js`** — a single source of truth. Edit it once and the course cards, comparison table, fee calculator, *and* the chatbot's knowledge all update automatically.
 
-GitHub: [@AbdulRehman-developer1](https://github.com/AbdulRehman-developer1)
+## 🎨 Customizing Animations
 
-⭐ If you found this project useful, consider giving it a star!
+Section entrances are driven by a `data-reveal="..."` attribute in `index.html`:
+
+| Value | Effect |
+|---|---|
+| `fade-up` | Fades in while sliding up |
+| `slide-left` / `slide-right` | Slides in from the side |
+| `scale-pop` | Scales up with a pop |
+| `flip` | 3D flip reveal |
+| `drop` | Drops into place |
+
+Matched by CSS in `css/style.css`, triggered by `observeReveals()` in `js/app.js`. Change the attribute value — no JS edits needed.
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Markup | HTML5 |
+| Styling | [Tailwind CSS](https://tailwindcss.com) (precompiled, no CDN dependency) |
+| Interactivity | Vanilla JavaScript (ES6+) — no framework |
+| AI Model | [Groq](https://groq.com) — `openai/gpt-oss-120b` → `llama-3.3-70b-versatile` fallback |
+| Backend | [Netlify Functions](https://docs.netlify.com/functions/overview/) (serverless proxy) |
+| Hosting | [Netlify](https://netlify.com) |
+
+## 🔒 Security Notes
+
+- 🚫 Never commit a real API key — `js/config.js` ships a harmless, **unused** placeholder.
+- ✅ The real key belongs only in a Netlify environment variable (`GROQ_API_KEY`) or a local, git-ignored `.env`.
+- ♻️ If a real key is ever committed by mistake, **rotate it immediately** in the Groq dashboard — deleting it in a later commit doesn't erase it from git history.
+- 🛡️ Consider setting a usage/rate limit on the key in your Groq dashboard as an extra layer of protection.
+
+## 📄 License
+
+Released under the **MIT License** — see [LICENSE](./LICENSE) for details.
+
+---
+
+<div align="center">
+
+## 👨‍💻 Author
+
+**Abdul Rehman**
+*AI Engineer · Data Science & AI Enthusiast*
+
+[![GitHub](https://img.shields.io/badge/GitHub-AbdulRehman--developer1-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AbdulRehman-developer1)
+
+### ⭐ If you found this project useful, consider giving it a star!
+
+</div>
